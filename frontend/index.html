@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <title>ChessDrill — Éditeur d'exercices d'échecs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css" />
+
+  <noscript>Active JavaScript pour utiliser le site.</noscript>
+</head>
+<body>
+  <h1>♯ Éditeur d'exercices d'échecs</h1>
+
+  <!-- Modal mauvais coup -->
+  <div id="badMoveModal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <h2>❌ Mauvais coup !</h2>
+      <p id="badMoveText">Ce n'est pas le bon coup.</p>
+      <p id="moveHint">Indice : Joue avec la pièce...</p>
+      <button id="badMoveCloseBtn">OK</button>
+    </div>
+  </div>
+
+  <!-- Plateau principal -->
+  <div id="board"></div>
+
+  <!-- Toast / feedback -->
+  <div id="feedbackMessage" style="
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity .3s ease;
+    z-index: 9999;
+  "></div>
+
+  <!-- Actions -->
+  <div>
+    <button onclick="app.clearBoard()">🔄 Réinitialiser</button>
+    <button onclick="app.saveStartPosition()">📌 Sauver le problème</button>
+    <button id="recordButton" onclick="app.toggleRecording()">🎮 Commencer l'enregistrement</button>
+    <button onclick="app.saveEndPosition()">✅ Sauver la solution</button>
+    <button onclick="app.saveExercise()">🗓 Enregistrer dans la BDD</button>
+    <button onclick="app.loadExercises()">📂 Charger les exercices</button>
+    <button onclick="app.startChainMode()">⚡ Mode Résolution à la chaîne</button>
+  </div>
+
+  <!-- Formulaires -->
+  <div>
+    <h3>Trait :</h3>
+    <select id="turn">
+      <option value="w">Trait aux blancs</option>
+      <option value="b">Trait aux noirs</option>
+    </select>
+  </div>
+
+  <div>
+    <h3>Explication :</h3>
+    <textarea id="explanation" placeholder="Ex: Ce sacrifice ouvre la colonne h..."></textarea>
+  </div>
+
+  <!-- Liste des exercices -->
+  <div id="exerciseList"></div>
+
+  <!-- Mode chaîne -->
+  <div id="chainContainer" style="display:none;">
+    <h2>🔥 Résolution à la chaîne</h2>
+    <p id="chainScore">Score : 0</p>
+    <div id="chainBoard"></div>
+  </div>
+
+  <!-- Config globale -->
+  <script>
+    window.API_BASE_URL = '/api';
+    window.PIECE_THEME = '/img/pieces/{piece}.png';
+  </script>
+
+  <!-- Librairies tierces (ordre important) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chess.js@0.10.3/chess.min.js"></script>
+  <script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
+
+  <!-- Script principal -->
+  <script type="module" src="/js/app.js"></script>
+
+  <!-- LiveReload (décommente si besoin) -->
+  <!--
+  <script>
+    document.write('<script src="http://' +
+      (location.host || 'localhost').split(':')[0] +
+      ':35729/livereload.js?snipver=1"></' + 'script>');
+  </script>
+  -->
+</body>
+</html>
